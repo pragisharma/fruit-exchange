@@ -9,7 +9,7 @@ cors = CORS()
 
 def create_app(conf_class=Config):
     # raise Exception("CREATE APP HAPPENED")
-    from .models import User, Request , db
+    from .models import User, db
     templates=os.path.join(os.path.dirname(__file__), '../client/build')
     statics = os.path.join(os.path.dirname(__file__), '../client/build/assets')
     app = Flask(__name__) # , template_folder=templates, static_folder=statics, static_url_path='/')
