@@ -11,7 +11,7 @@ function testfunc(){
 }
 
 function userLogin(){
-    console.log("userlogin fucntino has been called!")
+    console.log("userlogin function has been called!")
         const user = fetch('http://127.0.0.1:5000/login', {
             method: 'POST',
             body: JSON.stringify({'username': username, 'password': password}),
