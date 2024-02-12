@@ -8,12 +8,18 @@ import LoginPage from './LoginPage.svelte'
 import Error from './Error.svelte'
 import AdminWeek from './AdminWeek.svelte'
 import NewFeed from './NewFeed.svelte'
+import About from './About.svelte'
+import ContactUs from './ContactUs.svelte'
+import Add from './Add.svelte'
 import { wrap } from 'svelte-spa-router/wrap'
 import { first_name } from './stores.js'
+import Buy from './Buy.svelte'
 
 export const routes = {
     "/": Home,
     "/register": Register,
+    "/about": About,
+    "/contactus": ContactUs,
     "/today": Day,
     "/slot": Slot,
     "/week": wrap({
@@ -24,5 +30,7 @@ export const routes = {
     "/signin": LoginPage,
     "/error": Error,
     "/admin": AdminWeek,
-    "/fruits": NewFeed
+    "/fruits": NewFeed,
+    "/add": Add,
+    "/buy": Buy
 }

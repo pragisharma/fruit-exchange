@@ -3,6 +3,7 @@
   import { push } from 'svelte-spa-router'
   import { isloggedin } from "./stores";
   function logout(){
+    console.log("made it to logout!")
       const lo = fetch(urlbase + '/logout', {
           method:'POST',
           body: JSON.stringify({'logout': true}),
@@ -10,7 +11,9 @@
               'Content-Type': 'application/json'
           }
       }).then(resp => resp.json().then(res => {
-          let loggedOut = res['logoutsuccessful'];
+          let loggedOut = res['loggedout'];
+          console.log("logged out:")
+          console.log(loggedOut)
           if (loggedOut == true){
               isloggedin.set(false)
               console.log("made it to pre-re-navigation thingy")
@@ -28,23 +31,24 @@
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
         </label>
         <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-70">
-          <li><a>Item 1</a></li>
-          <li>
-            <a>Parent</a>
-            <ul class="p-2">
+          <li><button on:click={()=>{push('/add')}}>Add Produce</button></li>
+          <li><button on:click={()=>{push('/about')}}>About</button>
+            
+            <!--<ul class="p-2">
               <li><a>Submenu 1</a></li>
               <li><a>Submenu 2</a></li>
-            </ul>
+            </ul>-->
           </li>
-          <li><a>Item 3</a></li>
+          <li><button on:click={()=>{push('/contactus')}}>Contact Us</button></li>
+          <li><button on:click={()=>{push('/buy')}}>Buy Fruit</button></li>
         </ul>
       </div>
-      <h1 class="font-black">Tino Conf</h1>
+      <h1 class="font-black text-xl"><button on:click={()=>{push('/')}}>Fruit Exchange</button></h1>
     </div>
     <div class="navbar-center hidden lg:flex">
       <ul class="menu menu-horizontal px-1">
-        <li><a>Item 1</a></li>
-        <li tabindex="0">
+        <li><button on:click={()=>{push('/add')}}>Add produce!</button></li>
+        <!--<li tabindex="0">
           <details>
             <summary>Parent</summary>
             <ul class="p-2">
@@ -52,8 +56,10 @@
               <li><a>Submenu 2</a></li>
             </ul>
           </details>
-        </li>
-        <li><a>Item 3</a></li>
+        </li>-->
+        <li><button on:click={()=>{push('/about')}}>About</button></li>
+        <li><button on:click={()=>{push('/contactus')}}>Contact Us</button></li>
+        <li><button on:click={()=>{push('/buy')}}>Buy Fruit</button></li>
       </ul>
     </div>
     <div class="navbar-end">

@@ -28,6 +28,9 @@ def login():
     
     usr = User.query.filter_by(User.id).first()
     session["uid"] = usr.id
+    print("uid:",session["uid"])
+    print("uid in session:", "uid" in session)
+    print("LOGGED IN SUCCESSFULLY")
     return jsonify({"success": True})
 
     # the frontend will be posting JSON for username and password, so you need to get that from the request
@@ -44,11 +47,13 @@ def unauth():
 @auth.route('/logout', methods=['POST'])
 def logout():
     req = request.json
-
+    print("uid in session:", "uid" in session)
     if req['logout'] == True and "uid" in session:
+        print("logout true")
         session.pop("uid", None)
         return jsonify({"loggedout": True})
     else:
+        print("logout false")
         return jsonify({"loggedout": False})
 
     # log out! again, can just work with flasks's session or can use flask-login

@@ -27,8 +27,17 @@ def home(path):
     return send_from_directory('../client', path)
 
 @main.route('/get_all_produce')
+@cross_origin()
 def get_all_produce():
-    return User.query.all()
+    produce = ProduceType.query.all()
+    produce_list = []
+    for item in produce:
+        produce_list.append({
+            'fruit_type': item.fruit_type,
+            'num_fruits': item.num_fruits,
+            'description': item.description
+        })
+    return jsonify(produce_list)
     
     # query = db.select(
     # User.user_fruit_type,
@@ -36,17 +45,24 @@ def get_all_produce():
     
     # gee i wonder what this one does
 
+@main.route('/test')
+def test():
+    #return '<h1>"hi"</hi>'
+    return jsonify([{"id":1, "fruit_type":"apple", "num_fruits": "4", "description": "amazing"}, {"id":2, "fruit_type":"banana", "num_fruits": "7", "description": "delicious"}])
+
 @main.route('/add_produce_type', methods=['POST'])
+@cross_origin()
 def add_produce_type():
     rq = request.json
     fruit_type = rq['fruit_type']
-    num_fruit = rq['num_fruit']
+    num_fruits = rq['num_fruits']
     description = rq['description']
-    fruit = ProduceType(fruit_type=fruit_type, num_fruit=num_fruit , description=description)
+    fruit = ProduceType(fruit_type=fruit_type, num_fruits=num_fruits , description=description)
     
     db.session.add(fruit)
     db.session.commit()
     
+    return jsonify({'success': True})
 
     # note that you'll need the current user's user id, either from session or flask_login's current_user variable, to create an entry in the ProduceType table!
 
@@ -61,11 +77,11 @@ def buy_produce():
     # send email 
     rq = request.json
     fruit_type = rq['fruit_type']
-    num_fruit = rq['num_fruit']
+    num_fruits= rq['num_fruits']
     description = rq['description']
     
     ## Request import??? 
-    tbd = Request.query.filter_by(fruit_type=fruit_type, num_fruit=num_fruit , description=description).first()
+    tbd = ProduceType.query.filter_by(fruit_type=fruit_type, num_fruits=num_fruits , description=description).first()
     
     if tbd:
         tbd.is_approved = True
